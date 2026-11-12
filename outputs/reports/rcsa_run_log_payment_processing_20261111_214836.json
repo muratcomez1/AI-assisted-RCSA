@@ -1,0 +1,133 @@
+{
+  "status": "COMPLETED_WITH_WARNINGS",
+  "process": "Payment Processing",
+  "run_log": [
+    {
+      "ts": "21:48:18",
+      "node": "validate_input",
+      "status": "ok",
+      "detail": "Loaded 7 process-risk pairs from data/rcsa_synthetic_data.csv"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P08: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P09: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P10: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P11: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P12: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P13: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P14: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "apply_rules",
+      "status": "ok",
+      "detail": "Rules applied to 7 pairs; 1 high review priority"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "retrieve_evidence",
+      "status": "ok",
+      "detail": "Retrieved guidance for 7 pairs from 13 chunks"
+    },
+    {
+      "ts": "21:48:18",
+      "node": "external_research",
+      "status": "skipped",
+      "detail": "Disabled with --no-external"
+    },
+    {
+      "ts": "21:48:22",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P08: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "21:48:25",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P09: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "21:48:27",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P10: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "21:48:29",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P11: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "21:48:32",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P12: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "21:48:34",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P13: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "21:48:36",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P14: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "21:48:36",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "0/7 challenges written by the LLM (gpt-4o-mini); 7 deterministic fallback"
+    },
+    {
+      "ts": "21:48:36",
+      "node": "build_report",
+      "status": "ok",
+      "detail": "Report assembled"
+    },
+    {
+      "ts": "21:48:36",
+      "node": "finalize",
+      "status": "ok",
+      "detail": "Report saved to outputs/reports/rcsa_challenge_payment_processing_20261111_214836.md. Pending human review"
+    }
+  ],
+  "external": {}
+}

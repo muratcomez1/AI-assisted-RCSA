@@ -1,0 +1,19 @@
+{
+  "status": "FAILED",
+  "process": "Payment Processing",
+  "run_log": [
+    {
+      "ts": "03:58:44",
+      "node": "validate_input",
+      "status": "failed",
+      "detail": "Missing required columns: ['Pair ID', 'Process', 'Risk ID', 'Risk', 'Loss events (count)', 'Loss amount (EUR)', 'KRI', 'Previous RCSA', 'Control', 'Applicable', 'Expected result']. Found: []"
+    },
+    {
+      "ts": "03:58:44",
+      "node": "finalize",
+      "status": "ok",
+      "detail": "Report saved to outputs/reports/rcsa_challenge_payment_processing_20261111_035844.md. Pending human review"
+    }
+  ],
+  "external": {}
+}

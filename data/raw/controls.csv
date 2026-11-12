@@ -1,0 +1,11 @@
+control_id,process_id,control_name,control_type,frequency,effectiveness
+C001,P001,Payment detail validation,Preventive,Per transaction,Partially Effective
+C002,P001,Duplicate payment review,Detective,Daily,Effective
+C003,P002,Payment batch monitoring,Detective,Daily,Partially Effective
+C004,P002,Settlement reconciliation,Detective,Daily,Effective
+C005,P003,Fraud transaction monitoring,Preventive,Continuous,Partially Effective
+C006,P003,Alert escalation review,Detective,Daily,Partially Effective
+C007,P004,Daily reconciliation review,Detective,Daily,Effective
+C008,P004,Exception escalation,Corrective,Daily,Partially Effective
+C009,P005,Refund approval workflow,Preventive,Per transaction,Effective
+C010,P005,Chargeback deadline monitoring,Detective,Daily,Partially Effective

@@ -1,0 +1,6 @@
+process_id,process_name,department,process_owner
+P001,Payment Initiation and Validation,Payments Operations,Payments Manager
+P002,Payment Execution and Settlement,Payments Operations,Operations Manager
+P003,Transaction Monitoring and Fraud Detection,Payments Operations,Fraud Manager
+P004,Reconciliation and Exception Handling,Payments Operations,Reconciliation Manager
+P005,Refunds Returns and Chargebacks,Payments Operations,Payments Manager

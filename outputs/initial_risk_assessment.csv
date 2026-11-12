@@ -1,0 +1,6 @@
+process_id,process_name,historical_loss_eur,loss_event_count,control_count,ineffective_or_partial_controls,initial_exposure,assessment_status
+P001,Payment Initiation and Validation,20700,2,2,1,Medium,Requires Human Review
+P002,Payment Execution and Settlement,42000,2,2,1,High,Requires Human Review
+P003,Transaction Monitoring and Fraud Detection,77000,2,2,2,High,Requires Human Review
+P004,Reconciliation and Exception Handling,24500,2,2,1,Medium,Requires Human Review
+P005,Refunds Returns and Chargebacks,18000,2,2,1,Medium,Requires Human Review

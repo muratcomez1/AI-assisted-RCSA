@@ -1,0 +1,11 @@
+event_id,process_id,event_date,event_type,description,financial_impact_eur,root_cause
+LE001,P001,2024-02-15,Incorrect Payment,Incorrect beneficiary details caused duplicate payment,12500,Manual data entry error
+LE002,P001,2025-06-10,Processing Error,Validation failure allowed incomplete payment instructions,8200,Insufficient validation rules
+LE003,P002,2023-11-20,Settlement Delay,Payment batch was not executed on time,18000,System processing failure
+LE004,P002,2025-01-12,Failed Payment,Payment execution failed due to interface disruption,24000,Third party system failure
+LE005,P003,2024-08-05,Fraud Loss,Fraudulent transaction was not detected,45000,Monitoring rule weakness
+LE006,P003,2025-09-18,Fraud Loss,Suspicious transaction escalation was delayed,32000,Alert handling failure
+LE007,P004,2023-04-11,Reconciliation Error,Unmatched transactions remained unidentified,9500,Reconciliation control gap
+LE008,P004,2025-03-22,Financial Loss,Incorrect reconciliation adjustment,15000,Insufficient review
+LE009,P005,2024-12-01,Refund Error,Duplicate refund issued to customer,7000,Manual processing error
+LE010,P005,2025-07-14,Chargeback Loss,Chargeback evidence was submitted late,11000,Missed deadline

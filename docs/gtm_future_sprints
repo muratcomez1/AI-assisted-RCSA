@@ -1,0 +1,24 @@
+# GTM sprints after the MVP (document only, nothing implemented)
+
+The MVP is an RCSA Evidence and Challenge Agent for Second Line Operational Risk. These three sprints describe how it could reach a real customer.
+
+## Sprint 1: Validate the problem with risk teams
+- **Goal:** Test whether the challenge report addresses a real Second Line pain point.
+- **Target user / buyer:** Operational Risk Managers and RCSA leads at banks and fintechs.
+- **Channel:** Interviews and prototype walkthroughs (LinkedIn, personal network, risk communities).
+- **Deliverables:** Interview notes, feedback summary, prioritised requirements.
+- **Success metrics:** 5 to 8 interviews completed and at least 3 teams confirming the problem is relevant.
+
+## Sprint 2: Pilot with a controlled evidence pack
+- **Goal:** Evaluate usefulness, traceability and false-positive rate on realistic but anonymised data.
+- **Target user / buyer:** Second Line Operational Risk team at one pilot institution.
+- **Channel:** Design-partner pilot of 2 weeks using anonymised or synthetic data.
+- **Deliverables:** Pilot report, evaluation rubric, revised challenge rules.
+- **Success metrics:** Reviewer usefulness rating (for example 4 out of 5 or higher) and share of findings with traceable supporting evidence. Target: 3 of 5 reviewers use it in every weekly cycle.
+
+## Sprint 3: Prepare an enterprise-ready proposition
+- **Goal:** Define the controls needed for a governed deployment.
+- **Target user / buyer:** Heads of Operational Risk, Risk Transformation and GRC.
+- **Channel:** Targeted demos and partnership discussions with GRC and RCSA platform providers.
+- **Deliverables:** Product roadmap covering access control, audit logging, evaluation, data protection (including Google Sheets API with a service account instead of a public link) and integration with the GRC tool.
+- **Success metrics:** Two qualified pilot opportunities or documented enterprise design-partner interest.

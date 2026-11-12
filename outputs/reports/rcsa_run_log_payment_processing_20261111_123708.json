@@ -1,0 +1,154 @@
+{
+  "status": "COMPLETED_WITH_WARNINGS",
+  "process": "Payment Processing",
+  "run_log": [
+    {
+      "ts": "12:35:52",
+      "node": "validate_input",
+      "status": "ok",
+      "detail": "Loaded 7 process-risk pairs from data/rcsa_synthetic_data.csv"
+    },
+    {
+      "ts": "12:35:52",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P08: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "12:35:52",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P09: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "12:35:52",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P10: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "12:35:52",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P11: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "12:35:52",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P12: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "12:35:52",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P13: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "12:35:52",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P14: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "12:35:52",
+      "node": "apply_rules",
+      "status": "ok",
+      "detail": "Rules applied to 7 pairs; 1 high review priority"
+    },
+    {
+      "ts": "12:35:52",
+      "node": "retrieve_evidence",
+      "status": "ok",
+      "detail": "Retrieved guidance for 7 pairs from 13 chunks"
+    },
+    {
+      "ts": "12:36:50",
+      "node": "external_research",
+      "status": "degraded",
+      "detail": "GDELT DOC API: failed, 0 items, 3 attempts (HTTPError: HTTP Error 429: Too Many Requests)"
+    },
+    {
+      "ts": "12:36:50",
+      "node": "external_research",
+      "status": "skipped",
+      "detail": "Tavily Search API: skipped, 0 items, 0 attempts (TAVILY_API_KEY not set)"
+    },
+    {
+      "ts": "12:36:53",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P08: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "12:36:55",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P09: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "12:36:58",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P10: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "12:37:00",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P11: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "12:37:03",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P12: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "12:37:05",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P13: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "12:37:08",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "P14: LLM failed after 2 attempts (AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-svcac***********************************************************************************************************************************************************************************mini. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401})"
+    },
+    {
+      "ts": "12:37:08",
+      "node": "llm_challenge",
+      "status": "degraded",
+      "detail": "0/7 challenges written by the LLM (gpt-4.1-mini); 7 deterministic fallback"
+    },
+    {
+      "ts": "12:37:08",
+      "node": "build_report",
+      "status": "ok",
+      "detail": "Report assembled"
+    },
+    {
+      "ts": "12:37:08",
+      "node": "finalize",
+      "status": "ok",
+      "detail": "Report saved to outputs/reports/rcsa_challenge_payment_processing_20261111_123708.md. Pending human review"
+    }
+  ],
+  "external": {
+    "gdelt": {
+      "tool": "GDELT DOC API",
+      "status": "failed",
+      "attempts": 3,
+      "error": "HTTPError: HTTP Error 429: Too Many Requests",
+      "items": []
+    },
+    "tavily": {
+      "tool": "Tavily Search API",
+      "status": "skipped",
+      "attempts": 0,
+      "error": "TAVILY_API_KEY not set",
+      "items": []
+    }
+  }
+}
