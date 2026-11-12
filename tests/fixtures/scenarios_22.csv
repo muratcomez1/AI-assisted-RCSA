@@ -1,0 +1,23 @@
+Scenario ID,Loss event,KRI,Previous RCSA,Control,Applicable,Expected result,Not in previous RCSA,No KRI coverage,Control conflict,Action required,Key,Pairs in dataset,Coverage
+1,N,N,N,n/a,No,Not applicable - accepted,No,No,No,No,NNN|n/a,8,Covered
+2,N,N,Y,None,Yes,High - residual = inherent,No,No,No,Yes,NNY|None,2,Covered
+3,N,N,Y,Not effective,Yes,High - action required,No,No,No,Yes,NNY|Not effective,2,Covered
+4,N,N,Y,Effective,Yes,"Residual reduced, accepted",No,No,No,No,NNY|Effective,2,Covered
+5,N,Y,N,None,Yes,High - residual = inherent,Yes,No,No,Yes,NYN|None,1,Covered
+6,N,Y,N,Not effective,Yes,High - action required,Yes,No,No,Yes,NYN|Not effective,1,Covered
+7,N,Y,N,Effective,Yes,"Residual reduced, accepted",Yes,No,No,No,NYN|Effective,1,Covered
+8,Y,N,N,None,Yes,High - residual = inherent,Yes,Yes,No,Yes,YNN|None,1,Covered
+9,Y,N,N,Not effective,Yes,High - action required,Yes,Yes,No,Yes,YNN|Not effective,1,Covered
+10,Y,N,N,Effective,Yes,"Conflict - effectiveness downgraded, residual floor applied",Yes,Yes,Yes,No,YNN|Effective,2,Covered
+11,N,Y,Y,None,Yes,High - residual = inherent,No,No,No,Yes,NYY|None,1,Covered
+12,N,Y,Y,Not effective,Yes,High - action required,No,No,No,Yes,NYY|Not effective,1,Covered
+13,N,Y,Y,Effective,Yes,"Residual reduced, accepted",No,No,No,No,NYY|Effective,2,Covered
+14,Y,N,Y,None,Yes,High - residual = inherent,No,Yes,No,Yes,YNY|None,1,Covered
+15,Y,N,Y,Not effective,Yes,High - action required,No,Yes,No,Yes,YNY|Not effective,1,Covered
+16,Y,N,Y,Effective,Yes,"Conflict - effectiveness downgraded, residual floor applied",No,Yes,Yes,No,YNY|Effective,1,Covered
+17,Y,Y,N,None,Yes,High - residual = inherent,Yes,No,No,Yes,YYN|None,1,Covered
+18,Y,Y,N,Not effective,Yes,High - action required,Yes,No,No,Yes,YYN|Not effective,1,Covered
+19,Y,Y,N,Effective,Yes,"Conflict - effectiveness downgraded, residual floor applied",Yes,No,Yes,No,YYN|Effective,1,Covered
+20,Y,Y,Y,None,Yes,High - residual = inherent,No,No,No,Yes,YYY|None,1,Covered
+21,Y,Y,Y,Not effective,Yes,High - action required,No,No,No,Yes,YYY|Not effective,1,Covered
+22,Y,Y,Y,Effective,Yes,"Conflict - effectiveness downgraded, residual floor applied",No,No,Yes,No,YYY|Effective,2,Covered

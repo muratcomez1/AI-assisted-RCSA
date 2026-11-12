@@ -19,7 +19,7 @@ def _pairs(process="Payment Processing"):
 
 
 def test_loader_reads_pairs_and_rejects_unknown_process():
-    assert len(_pairs()) == 5
+    assert len(_pairs()) == 6
     pairs, errors = load_pairs(FIXTURE, "Nope")
     assert pairs == [] and "not found" in errors[0]
 
@@ -33,8 +33,8 @@ def test_loader_reports_missing_file_and_columns(tmp_path):
 
 def test_rules_gap_case():
     r = evaluate_pair(_pairs()["P08"])
-    assert {"LOSS_EVENTS_PRESENT", "RCSA_GAP", "NO_KRI_COVERAGE", "NO_CONTROL"} <= set(r["flags"])
-    assert r["review_priority"] == "medium"
+    assert {"LOSS_EVENTS_PRESENT", "RCSA_GAP", "NO_KRI_COVERAGE", "NO_CONTROL", "ACTION_REQUIRED"} <= set(r["flags"])
+    assert r["review_priority"] == "medium" and r["scenario_result"] == "High - residual = inherent"
 
 
 def test_rules_control_conflict_is_flagged_for_review_not_decided():
@@ -48,9 +48,38 @@ def test_rules_not_applicable_accepted_and_challenged():
     assert r["flags"] == ["APPLICABILITY_CHALLENGE"] and r["review_priority"] == "high"
 
 
+def test_rules_not_effective_control_needs_action():
+    r = evaluate_pair(_pairs()["P13"])
+    assert {"CONTROL_NOT_EFFECTIVE", "ACTION_REQUIRED"} <= set(r["flags"])
+    assert r["scenario_result"] == "High - action required"
+
+
+def test_rules_match_all_22_scenarios():
+    """Build one pair per scenario and compare with the scenario file's own columns."""
+    import csv
+    rows = list(csv.DictReader(open(str(Path(__file__).parent / "fixtures" / "scenarios_22.csv"))))
+    assert len(rows) == 22
+    for s in rows:
+        applicable = s["Applicable"] == "Yes"
+        pair = {"pair_id": "S" + s["Scenario ID"], "loss_events": 1 if s["Loss event"] == "Y" else 0,
+                "kri": "KRI" if s["KRI"] == "Y" else "", "previous_rcsa": s["Previous RCSA"] == "Y",
+                "control": s["Control"], "applicable": applicable, "anomaly": "", "expected_result": s["Expected result"]}
+        r = evaluate_pair(pair)
+        flags = set(r["flags"])
+        assert r["scenario_result"] == s["Expected result"], s["Scenario ID"]
+        assert r["warnings"] == [], (s["Scenario ID"], r["warnings"])
+        if applicable:
+            assert ("RCSA_GAP" in flags) == (s["Not in previous RCSA"] == "Yes"), s["Scenario ID"]
+            assert ("NO_KRI_COVERAGE" in flags) == (s["No KRI coverage"] == "Yes"), s["Scenario ID"]
+            assert ("CONTROL_CONFLICT" in flags) == (s["Control conflict"] == "Yes"), s["Scenario ID"]
+            assert ("ACTION_REQUIRED" in flags) == (s["Action required"] == "Yes"), s["Scenario ID"]
+        else:
+            assert flags == {"NOT_APPLICABLE_ACCEPTED"}
+
+
 def test_rules_anomaly_and_partial_control():
     r = evaluate_pair(_pairs()["P11"])
-    assert "DATA_ANOMALY" in r["flags"] and "CONTROL_CONFLICT" not in r["flags"]
+    assert {"DATA_ANOMALY", "OUTSIDE_SCENARIOS"} <= set(r["flags"]) and "CONTROL_CONFLICT" not in r["flags"]
 
 
 def test_retriever_returns_cited_chunks():

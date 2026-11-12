@@ -1,0 +1,91 @@
+{
+  "status": "COMPLETED_WITH_WARNINGS",
+  "process": "Payment Processing",
+  "run_log": [
+    {
+      "ts": "11:39:00",
+      "node": "validate_input",
+      "status": "ok",
+      "detail": "Loaded 7 process-risk pairs from data/rcsa_synthetic_data.csv"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P08: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P09: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P10: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P11: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P12: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P13: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P14: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "apply_rules",
+      "status": "ok",
+      "detail": "Rules applied to 7 pairs; 1 high review priority"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "retrieve_evidence",
+      "status": "ok",
+      "detail": "Retrieved guidance for 7 pairs from 13 chunks"
+    },
+    {
+      "ts": "11:39:00",
+      "node": "external_research",
+      "status": "skipped",
+      "detail": "Disabled with --no-external"
+    },
+    {
+      "ts": "11:39:32",
+      "node": "llm_challenge",
+      "status": "ok",
+      "detail": "7/7 challenges written by the LLM (gpt-6-luna); 0 deterministic fallback"
+    },
+    {
+      "ts": "11:39:32",
+      "node": "build_report",
+      "status": "ok",
+      "detail": "Report assembled"
+    },
+    {
+      "ts": "11:39:32",
+      "node": "finalize",
+      "status": "ok",
+      "detail": "Report saved to outputs/reports/rcsa_challenge_payment_processing_20261112_113932.md. Pending human review"
+    }
+  ],
+  "external": {}
+}

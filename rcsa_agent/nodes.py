@@ -22,9 +22,9 @@ def _log(node: str, status: str, detail: str) -> dict:
 def validate_input(state: dict) -> dict:
     load_env()
     log = []
-    path = state.get("data_path") or find_default_csv()
+    path = state.get("data_path") or os.environ.get("RCSA_SHEET_URL", "").strip() or find_default_csv()
     if not path:
-        msg = "No input CSV found. Pass --data path/to/rcsa_synthetic_data.csv"
+        msg = "No input found. Pass --data (file or Google Sheet CSV link) or set RCSA_SHEET_URL in .env"
         return {"fatal_error": msg, "pairs": [], "run_log": [_log("validate_input", "failed", msg)]}
 
     pairs, errors = load_pairs(path, state.get("process", "Payment Processing"))
@@ -52,7 +52,8 @@ def apply_rules(state: dict) -> dict:
     findings, log = [], []
     for pair in state["pairs"]:
         result = evaluate_pair(pair)
-        findings.append({"pair": pair, "flags": result["flags"], "review_priority": result["review_priority"]})
+        findings.append({"pair": pair, "flags": result["flags"], "scenario_result": result["scenario_result"],
+                         "review_priority": result["review_priority"]})
         for w in result["warnings"]:
             log.append(_log("apply_rules", "warning", w))
     high = sum(1 for f in findings if f["review_priority"] == "high")

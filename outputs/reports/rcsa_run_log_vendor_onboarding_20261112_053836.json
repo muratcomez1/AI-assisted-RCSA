@@ -1,0 +1,85 @@
+{
+  "status": "COMPLETED_WITH_WARNINGS",
+  "process": "Vendor Onboarding",
+  "run_log": [
+    {
+      "ts": "05:38:05",
+      "node": "validate_input",
+      "status": "ok",
+      "detail": "Loaded 7 process-risk pairs from data/rcsa_synthetic_data.csv"
+    },
+    {
+      "ts": "05:38:05",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P02: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "05:38:05",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P03: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "05:38:05",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P04: source 'KRI flag'=N differs from the computed KRI coverage gap (True)"
+    },
+    {
+      "ts": "05:38:05",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P05: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "05:38:05",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P06: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "05:38:05",
+      "node": "apply_rules",
+      "status": "warning",
+      "detail": "P07: source 'KRI flag'=Y differs from the computed KRI coverage gap (False)"
+    },
+    {
+      "ts": "05:38:05",
+      "node": "apply_rules",
+      "status": "ok",
+      "detail": "Rules applied to 7 pairs; 0 high review priority"
+    },
+    {
+      "ts": "05:38:05",
+      "node": "retrieve_evidence",
+      "status": "ok",
+      "detail": "Retrieved guidance for 7 pairs from 13 chunks"
+    },
+    {
+      "ts": "05:38:05",
+      "node": "external_research",
+      "status": "skipped",
+      "detail": "Disabled with --no-external"
+    },
+    {
+      "ts": "05:38:36",
+      "node": "llm_challenge",
+      "status": "ok",
+      "detail": "7/7 challenges written by the LLM (gpt-6-luna); 0 deterministic fallback"
+    },
+    {
+      "ts": "05:38:36",
+      "node": "build_report",
+      "status": "ok",
+      "detail": "Report assembled"
+    },
+    {
+      "ts": "05:38:36",
+      "node": "finalize",
+      "status": "ok",
+      "detail": "Report saved to outputs/reports/rcsa_challenge_vendor_onboarding_20261112_053836.md. Pending human review"
+    }
+  ],
+  "external": {}
+}

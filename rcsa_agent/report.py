@@ -48,14 +48,14 @@ def build_report(state: dict) -> str:
                   f"- High review priority: {', '.join(high) if high else 'none'}",
                   "- Flags raised: " + (", ".join(f"{k} x{v}" for k, v in sorted(flag_counts.items())) or "none"),
                   "", "## 2. Overview", "",
-                  "| Pair | Process | Risk | Applicable | Loss events | KRI | Prev. RCSA | Control | Flags | Source expected result | Review priority |",
+                  "| Pair | Process | Risk | Applicable | Loss events | KRI | Prev. RCSA | Control | Flags | Scenario result (rules) | Review priority |",
                   "|---|---|---|---|---|---|---|---|---|---|---|"]
         for f in findings:
             p = f["pair"]
             lines.append("| " + " | ".join(_cell(x) for x in [
                 p["pair_id"], p["process"], f"{p['risk_id']} {p['risk']}", "Yes" if p["applicable"] else "No",
                 f"{p['loss_events']} ({p['loss_amount']:,.0f} EUR)", p["kri"], "Y" if p["previous_rcsa"] else "N",
-                p["control"], ", ".join(f["flags"]), p["expected_result"], f["review_priority"]]) + " |")
+                p["control"], ", ".join(f["flags"]), f.get("scenario_result", ""), f["review_priority"]]) + " |")
 
         lines += ["", "## 3. Detailed challenges", ""]
         for f in findings:

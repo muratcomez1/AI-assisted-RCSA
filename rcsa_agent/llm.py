@@ -31,6 +31,9 @@ QUESTIONS = {
     "NO_CONTROL": "Which control mitigates this risk, and who owns it?",
     "CONTROL_CONFLICT": "Why is the control rated Effective although loss events exist? What testing evidence supports the rating?",
     "DATA_ANOMALY": "Can the owner provide the supporting evidence behind the anomaly flagged in the source data?",
+    "CONTROL_NOT_EFFECTIVE": "Why is the control not effective, and what is the plan and timeline to fix it?",
+    "ACTION_REQUIRED": "Which action, owner and deadline will close the control gap?",
+    "OUTSIDE_SCENARIOS": "How should this control status be classified, and what evidence supports it?",
 }
 ACTIONS = {
     "APPLICABILITY_CHALLENGE": "Request evidence supporting the not-applicable decision before accepting it.",
@@ -40,6 +43,9 @@ ACTIONS = {
     "RCSA_GAP": "Confirm the risk is added to the current RCSA.",
     "LOSS_EVENTS_PRESENT": "Review the loss events with the owner.",
     "DATA_ANOMALY": "Ask the owner to clarify the data anomaly.",
+    "CONTROL_NOT_EFFECTIVE": "Agree a remediation plan with an owner and a deadline.",
+    "ACTION_REQUIRED": "Agree an action, owner and deadline.",
+    "OUTSIDE_SCENARIOS": "Ask the reviewer to classify the control status.",
 }
 
 
@@ -80,6 +86,7 @@ def _payload(finding: dict, external_items: list) -> tuple[str, set]:
                      "loss_events": pair["loss_events"], "loss_amount_eur": pair["loss_amount"],
                      "kri": pair["kri"] or None, "in_previous_rcsa": pair["previous_rcsa"],
                      "control": pair["control"], "source_anomaly": pair["anomaly"] or None},
+        "scenario_result": finding.get("scenario_result"),
         "rule_flags": [{"flag": f, "meaning": FLAG_TEXT[f]} for f in finding["flags"]],
         "guidance": guidance,
         "external_context": ext,

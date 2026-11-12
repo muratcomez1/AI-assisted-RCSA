@@ -1,7 +1,17 @@
-"""Deterministic challenge rules. No LLM, no invented scores.
+"""Deterministic challenge rules that follow the 22-scenario matrix.
 
-These rules only RAISE FLAGS for a human reviewer. They do not rate risk,
-approve controls or decide that a control has failed.
+Derived from rcsa_scenarios.csv:
+  * Not in previous RCSA flag  = risk was not in the previous RCSA
+  * No KRI coverage flag       = loss events exist AND no KRI is assigned
+  * Control conflict flag      = loss events exist AND control is Effective
+  * Action required            = control is None or Not effective
+  * Result                     = None -> High - residual = inherent
+                                 Not effective -> High - action required
+                                 Effective, no loss events -> Residual reduced, accepted
+                                 Effective, loss events -> Conflict - effectiveness downgraded, residual floor applied
+
+The rules only RAISE FLAGS for a human reviewer. They do not rate risk, approve controls
+or decide that a control has failed. No numeric scores are produced.
 """
 
 NO_CONTROL_VALUES = {"", "n/a", "na", "none", "no control", "-"}
@@ -11,63 +21,101 @@ FLAG_TEXT = {
     "NOT_APPLICABLE_ACCEPTED": "Marked not applicable and no contradicting evidence was found.",
     "LOSS_EVENTS_PRESENT": "Historical loss events exist for this process-risk pair.",
     "RCSA_GAP": "Risk is applicable but was not included in the previous RCSA.",
-    "NO_KRI_COVERAGE": "Risk is applicable but no KRI is assigned.",
+    "NO_KRI_COVERAGE": "Loss events exist but no KRI is assigned to monitor this risk.",
     "NO_CONTROL": "Risk is applicable but no control is described.",
+    "CONTROL_NOT_EFFECTIVE": "The control is described as Not effective.",
+    "ACTION_REQUIRED": "Action required: there is no control or the control is not effective.",
     "CONTROL_CONFLICT": "Control is described as Effective although loss events exist. Not automatic proof of control failure; needs human review.",
+    "OUTSIDE_SCENARIOS": "The control status is outside the 22-scenario matrix and needs human review.",
     "DATA_ANOMALY": "The source data marks an anomaly for this pair.",
 }
 HIGH_ATTENTION = {"APPLICABILITY_CHALLENGE", "CONTROL_CONFLICT", "DATA_ANOMALY"}
 
 
-def has_control(control: str) -> bool:
-    return str(control).strip().lower() not in NO_CONTROL_VALUES
+def _norm(control) -> str:
+    return str(control).strip().lower()
 
 
-def control_effective(control: str) -> bool:
-    s = str(control).strip().lower()
-    return s == "effective" or s == "yes"
+def has_control(control) -> bool:
+    return _norm(control) not in NO_CONTROL_VALUES
+
+
+def control_effective(control) -> bool:
+    return _norm(control) in {"effective", "yes"}
+
+
+def control_not_effective(control) -> bool:
+    return _norm(control) in {"not effective", "ineffective"}
+
+
+def _has_evidence(pair: dict) -> bool:
+    return (pair["loss_events"] > 0 or bool(str(pair["kri"]).strip())
+            or pair["previous_rcsa"] or has_control(pair["control"]))
+
+
+def scenario_result(pair: dict) -> str:
+    """Result text from the 22-scenario matrix for this pair."""
+    if not pair["applicable"]:
+        return "Not applicable - challenge needed" if _has_evidence(pair) else "Not applicable - accepted"
+    ctrl = pair["control"]
+    if not has_control(ctrl):
+        return "High - residual = inherent"
+    if control_not_effective(ctrl):
+        return "High - action required"
+    if control_effective(ctrl):
+        if pair["loss_events"] > 0:
+            return "Conflict - effectiveness downgraded, residual floor applied"
+        return "Residual reduced, accepted"
+    return "Outside the 22 scenarios - human review"
 
 
 def evaluate_pair(pair: dict) -> dict:
-    """Return {'flags': [...], 'review_priority': 'high|medium|low', 'warnings': [...]}."""
-    flags = []
-    warnings = []
+    """Return flags, scenario result, review priority and consistency warnings."""
+    flags, warnings = [], []
     loss = pair["loss_events"] > 0
     kri = bool(str(pair["kri"]).strip())
-    ctrl = has_control(pair["control"])
+    ctrl = pair["control"]
 
     if not pair["applicable"]:
-        if loss or kri or pair["previous_rcsa"] or ctrl:
-            flags.append("APPLICABILITY_CHALLENGE")
-        else:
-            flags.append("NOT_APPLICABLE_ACCEPTED")
+        flags.append("APPLICABILITY_CHALLENGE" if _has_evidence(pair) else "NOT_APPLICABLE_ACCEPTED")
     else:
         if loss:
             flags.append("LOSS_EVENTS_PRESENT")
         if not pair["previous_rcsa"]:
             flags.append("RCSA_GAP")
-        if not kri:
+        if loss and not kri:
             flags.append("NO_KRI_COVERAGE")
-        if not ctrl:
-            flags.append("NO_CONTROL")
-        if ctrl and control_effective(pair["control"]) and loss:
-            flags.append("CONTROL_CONFLICT")
+        if not has_control(ctrl):
+            flags += ["NO_CONTROL", "ACTION_REQUIRED"]
+        elif control_not_effective(ctrl):
+            flags += ["CONTROL_NOT_EFFECTIVE", "ACTION_REQUIRED"]
+        elif control_effective(ctrl):
+            if loss:
+                flags.append("CONTROL_CONFLICT")
+        else:
+            flags.append("OUTSIDE_SCENARIOS")
 
     if str(pair.get("anomaly", "")).strip():
         flags.append("DATA_ANOMALY")
 
-    # Consistency check against the source file's own flag columns (warnings only).
+    result = scenario_result(pair)
+
+    # Consistency checks against the source file's own columns (warnings only).
+    pid = pair["pair_id"]
     le_src = str(pair.get("le_flag", "")).strip()
     if le_src and (le_src.lower() in {"y", "yes"}) != loss:
-        warnings.append(f"{pair['pair_id']}: source 'LE flag'={le_src} differs from loss_events={pair['loss_events']}")
+        warnings.append(f"{pid}: source 'LE flag'={le_src} differs from loss_events={pair['loss_events']}")
     kri_src = str(pair.get("kri_flag", "")).strip()
-    if kri_src and pair["applicable"] and (kri_src.lower() in {"y", "yes"}) != (not kri):
-        warnings.append(f"{pair['pair_id']}: source 'KRI flag'={kri_src} differs from the computed KRI coverage gap ({not kri})")
+    if kri_src and (kri_src.lower() in {"y", "yes"}) != kri:
+        warnings.append(f"{pid}: source 'KRI flag'={kri_src} differs from KRI present={kri}")
+    expected = str(pair.get("expected_result", "")).strip()
+    if expected and expected.lower() != result.lower():
+        warnings.append(f"{pid}: source expected result '{expected}' differs from rule result '{result}'")
 
     if any(f in HIGH_ATTENTION for f in flags):
         priority = "high"
-    elif any(f not in {"NOT_APPLICABLE_ACCEPTED"} for f in flags):
+    elif any(f != "NOT_APPLICABLE_ACCEPTED" for f in flags):
         priority = "medium"
     else:
         priority = "low"
-    return {"flags": flags, "review_priority": priority, "warnings": warnings}
+    return {"flags": flags, "scenario_result": result, "review_priority": priority, "warnings": warnings}

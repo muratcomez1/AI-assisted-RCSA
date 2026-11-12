@@ -1,7 +1,8 @@
 Pair ID,Process,Risk ID,Risk,Loss events (count),Loss amount (EUR),KRI,Previous RCSA,Control,LE flag,KRI flag,Key,Scenario ID,Applicable,Expected result,Anomaly
 P01,Vendor Onboarding,R1,Process execution error,0,0,,N,n/a,N,N,NNN|n/a,1,No,Not applicable - accepted,
-P08,Payment Processing,R1,Process execution error,2,15000,,N,n/a,Y,Y,YNN|n/a,8,Yes,High - residual = inherent,
-P09,Payment Processing,R2,Third-party failure,1,5000,KRI-12 vendor SLA breaches,Y,Effective,Y,N,YYY|Effective,10,Yes,Challenge - loss event despite effective control,
-P10,Payment Processing,R3,System outage,0,0,KRI-3 uptime,Y,Effective,N,N,NYY|Effective,12,Yes,Low,
-P11,Payment Processing,R4,Data quality error,0,0,,Y,Partially effective,N,Y,NNY|Partial,13,Yes,Medium,Control without supporting evidence
-P12,Payment Processing,R7,Key person dependency,1,2000,,N,n/a,Y,N,YNN|n/a,1,No,Not applicable - accepted,
+P08,Payment Processing,R1,Process execution error,2,15000,,N,n/a,Y,N,YNN|n/a,8,Yes,High - residual = inherent,
+P09,Payment Processing,R2,Third-party failure,1,5000,KRI-12 vendor SLA breaches,Y,Effective,Y,Y,YYY|Effective,22,Yes,"Conflict - effectiveness downgraded, residual floor applied",
+P10,Payment Processing,R3,System outage,0,0,KRI-3 uptime,Y,Effective,N,Y,NYY|Effective,13,Yes,"Residual reduced, accepted",
+P11,Payment Processing,R4,Data quality error,0,0,KRI-5 exceptions,Y,Partially effective,N,Y,NYY|Partial,0,Yes,,Control without supporting evidence
+P12,Payment Processing,R7,Key person dependency,1,2000,,N,n/a,Y,N,YNN|n/a,0,No,,
+P13,Payment Processing,R5,Unauthorized access or fraud,0,0,KRI-7 reviews,Y,Not effective,N,Y,NYY|Not effective,12,Yes,High - action required,
