@@ -5,6 +5,7 @@ so a failing tool is always visible in the run log and in the report (no silent 
 """
 import json
 import os
+import re
 import ssl
 import time
 import urllib.parse
@@ -61,6 +62,32 @@ def gdelt_search(process: str, max_records: int = 5) -> dict:
                  "snippet": f"{a.get('domain', '')} ({a.get('seendate', '')})"} for a in arts]
 
     return _run_with_retries("GDELT DOC API", call)
+
+
+def wikipedia_search(process: str, max_results: int = 5) -> dict:
+    """Wikipedia search API: free, no key, very stable. Gives background context on the process and its risks."""
+    query = f"{process} operational risk"
+
+    def call():
+        params = urllib.parse.urlencode({
+            "action": "query", "list": "search", "srsearch": query,
+            "srlimit": max_results, "format": "json",
+        })
+        data = _http_json("https://en.wikipedia.org/w/api.php?" + params,
+                          headers={"User-Agent": "rcsa-agent/1.0 (Ironhack bootcamp project)"})
+        hits = (data.get("query") or {}).get("search")
+        if not isinstance(hits, list):
+            raise ValueError("unexpected response: no 'search' list")
+        items = []
+        for h in hits:
+            title = h.get("title", "")
+            snippet = re.sub(r"<[^>]+>", "", h.get("snippet", "") or "")
+            items.append({"title": title,
+                          "url": "https://en.wikipedia.org/wiki/" + urllib.parse.quote(title.replace(" ", "_")) if title else "",
+                          "snippet": snippet[:300]})
+        return items
+
+    return _run_with_retries("Wikipedia Search API", call)
 
 
 def tavily_search(process: str, max_results: int = 5) -> dict:

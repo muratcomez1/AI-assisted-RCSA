@@ -78,7 +78,7 @@ def external_research(state: dict) -> dict:
         return {"external": {}, "run_log": [_log("external_research", "skipped", "Disabled with --no-external")]}
     process = state.get("process", "Payment Processing")
     label = "banking operations" if process.upper() == "ALL" else process
-    results = {"gdelt": ext_tools.gdelt_search(label), "tavily": ext_tools.tavily_search(label)}
+    results = {"wikipedia": ext_tools.wikipedia_search(label), "tavily": ext_tools.tavily_search(label)}
     log = []
     for res in results.values():
         status = {"ok": "ok", "empty": "warning", "failed": "degraded", "skipped": "skipped"}[res["status"]]

@@ -2,7 +2,8 @@
 
 Derived from rcsa_scenarios.csv:
   * Not in previous RCSA flag  = risk was not in the previous RCSA
-  * No KRI coverage flag       = loss events exist AND no KRI is assigned
+  * No KRI coverage flag       = loss events exist AND no KRI is assigned (information only: a missing KRI says
+                                 nothing about control effectiveness, so it does not raise review priority)
   * Control conflict flag      = loss events exist AND control is Effective
   * Action required            = control is None or Not effective
   * Result                     = None -> High - residual = inherent
@@ -21,7 +22,7 @@ FLAG_TEXT = {
     "NOT_APPLICABLE_ACCEPTED": "Marked not applicable and no contradicting evidence was found.",
     "LOSS_EVENTS_PRESENT": "Historical loss events exist for this process-risk pair.",
     "RCSA_GAP": "Risk is applicable but was not included in the previous RCSA.",
-    "NO_KRI_COVERAGE": "Loss events exist but no KRI is assigned to monitor this risk.",
+    "NO_KRI_COVERAGE": "Information only: loss events exist but no KRI is assigned. A missing KRI says nothing about control effectiveness; the owner may not have needed one.",
     "NO_CONTROL": "Risk is applicable but no control is described.",
     "CONTROL_NOT_EFFECTIVE": "The control is described as Not effective.",
     "ACTION_REQUIRED": "Action required: there is no control or the control is not effective.",
@@ -29,6 +30,7 @@ FLAG_TEXT = {
     "OUTSIDE_SCENARIOS": "The control status is outside the 22-scenario matrix and needs human review.",
     "DATA_ANOMALY": "The source data marks an anomaly for this pair.",
 }
+INFO_ONLY = {"NOT_APPLICABLE_ACCEPTED", "NO_KRI_COVERAGE"}  # do not raise review priority
 HIGH_ATTENTION = {"APPLICABILITY_CHALLENGE", "CONTROL_CONFLICT", "DATA_ANOMALY"}
 
 
@@ -114,7 +116,7 @@ def evaluate_pair(pair: dict) -> dict:
 
     if any(f in HIGH_ATTENTION for f in flags):
         priority = "high"
-    elif any(f != "NOT_APPLICABLE_ACCEPTED" for f in flags):
+    elif any(f not in INFO_ONLY for f in flags):
         priority = "medium"
     else:
         priority = "low"

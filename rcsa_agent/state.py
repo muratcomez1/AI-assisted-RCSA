@@ -14,7 +14,7 @@ class RCSAState(TypedDict, total=False):
     # produced by the nodes
     pairs: list           # normalised process-risk pairs
     findings: list        # one dict per pair: pair, flags, guidance, challenge ...
-    external: dict        # results of the external tools (GDELT, Tavily)
+    external: dict        # results of the external tools (Wikipedia, Tavily)
     report_md: str
     report_path: str
     log_path: str

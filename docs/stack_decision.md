@@ -8,9 +8,9 @@ The RCSA challenge process has several stages that share data (process, risk pai
 |---|---|---|
 | Orchestration | LangGraph (7-node graph, conditional edge) | Explicit state, testable steps |
 | Facts and rules | Plain Python | Reproducible, testable, no numeric scores invented |
-| Challenge drafting | OpenAI API (model configurable with OPENAI_MODEL) | Drafts wording only, cites supplied evidence ids |
-| Retrieval (RAG) | Local retriever over knowledge/ (TF-IDF style, source ids) | Small corpus; no vector database needed |
-| External research | GDELT DOC API and Tavily Search API | Public news and web context |
+| Challenge drafting | OpenAI API (model configurable with `OPENAI_MODEL`) | Drafts wording only, cites supplied evidence ids |
+| Retrieval (RAG) | Local retriever over `knowledge/` (TF-IDF style, source ids) | Small corpus; no vector database needed |
+| External research | Wikipedia Search API and Tavily Search API | Public background and web context |
 | Input | CSV file or Google Sheet published as CSV | Business owner fills a sheet |
 | Output | Markdown report and JSON run log | Easy to review and audit |
 | Version control | Git, GitHub | Daily pushes |
@@ -20,7 +20,7 @@ RAG is used, locally. The corpus is a small set of challenge guidance written fo
 
 ## Reliability design
 - Required-input validation and a clear failure report when the input is wrong.
-- External tools: timeout, up to 3 attempts, response validation, explicit status (ok, empty, failed, skipped).
+- External tools: timeout, up to 3 attempts, response validation, explicit status (`ok`, `empty`, `failed`, `skipped`).
 - LLM: JSON validation, removal of cited ids that were not supplied, two attempts, then a deterministic fallback that is labelled in the report.
 - No silent failures: every degraded step appears in the run log and the report.
 

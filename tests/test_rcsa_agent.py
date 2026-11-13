@@ -110,6 +110,18 @@ def test_external_failure_is_reported_not_raised(monkeypatch):
     assert res["status"] == "failed" and res["attempts"] == 3 and "boom" in res["error"]
 
 
+def test_wikipedia_parsing_and_failure(monkeypatch):
+    payload = {"query": {"search": [{"title": "Payment processor", "snippet": "A <span>payment</span> processor"},
+                                    {"title": "", "snippet": "bad row"}]}}
+    monkeypatch.setattr(external, "_http_json", lambda *a, **k: payload)
+    res = external.wikipedia_search("Payment Processing")
+    assert res["status"] == "ok" and len(res["items"]) == 1
+    assert res["items"][0]["url"].endswith("/Payment_processor") and "<" not in res["items"][0]["snippet"]
+    monkeypatch.setattr(external, "RETRY_DELAY", 0)
+    monkeypatch.setattr(external, "_http_json", lambda *a, **k: (_ for _ in ()).throw(TimeoutError("boom")))
+    assert external.wikipedia_search("x")["status"] == "failed"
+
+
 def test_tavily_skipped_without_key(monkeypatch):
     monkeypatch.delenv("TAVILY_API_KEY", raising=False)
     assert external.tavily_search("x")["status"] == "skipped"

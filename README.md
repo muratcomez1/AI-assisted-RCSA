@@ -24,7 +24,7 @@ apply_rules -> retrieve_evidence -> external_research -> llm_challenge -> build_
 | validate_input | Loads the CSV (or a Google Sheet published as CSV), checks columns, selects the process |
 | apply_rules | Deterministic rules based on the 22-scenario matrix (flags, scenario result, review priority) |
 | retrieve_evidence | Local retrieval of challenge guidance (`knowledge/`), every chunk has a citable source id |
-| external_research | GDELT DOC API and Tavily Search with timeouts, retries and explicit status |
+| external_research | Wikipedia Search API and Tavily Search with timeouts, retries and explicit status |
 | llm_challenge | OpenAI drafts the challenge, questions and follow-up, citing only supplied evidence ids |
 | build_report | Builds the Markdown report |
 | finalize | Saves the report and a JSON run log, sets the run status |
@@ -56,7 +56,7 @@ RCSA_SHEET_URL=...            # optional: Google Sheet published as CSV
 ```bash
 python run_rcsa.py                                   # Payment Processing, LLM + external tools
 python run_rcsa.py --process "Vendor Onboarding"
-python run_rcsa.py --no-external                     # skip GDELT and Tavily
+python run_rcsa.py --no-external                     # skip Wikipedia and Tavily
 python run_rcsa.py --no-llm --no-external            # offline dry run
 python run_rcsa.py --data path/to/file.csv           # or a published Google Sheet CSV link
 ```
@@ -93,7 +93,7 @@ run_rcsa.py   one-command trigger
 - No numeric inherent or residual scores. A loss event alone does not prove a control failure.
 - A Google Sheet published to the web is readable by anyone with the link. Real data would need
   the Sheets API with a service account.
-- External sources give context only. GDELT may rate-limit requests; the agent reports this.
+- External sources give context only. A failing external tool is reported in the run log, never hidden.
 
 ## Documents
 

@@ -8,8 +8,8 @@ A First Line owner may mark a risk as not applicable for a process step. Second 
 ## Loss events and effective controls
 When a control is described as effective but loss events exist for the same process and risk, ask for the root cause analysis and for control testing evidence. A loss event does not automatically prove a control failure: the event may predate the control, may have a different cause, or the control may be only partly effective. The finding should go to a human reviewer as a question, not as a conclusion.
 
-## Missing KRI coverage
-An applicable risk without a Key Risk Indicator cannot be monitored between assessments. Ask the owner which measurable indicator could signal that exposure is changing, who owns it and what threshold would trigger escalation. Where loss events exist and no KRI is assigned, the gap is more significant.
+## Missing KRI coverage (information only)
+The absence of a Key Risk Indicator does not say anything about whether a control is effective. The owner may not have needed a KRI for this risk. A KRI that breaches its threshold is the signal that a control may be ineffective; a missing KRI is not. Where loss events exist and no KRI is assigned, Second Line may ask whether a KRI would add value, as an optional monitoring observation and not as a control finding.
 
 ## Risk missing from the previous RCSA
 If an applicable risk was not part of the previous RCSA, ask what changed in the process, systems or environment, and whether the earlier assessment was incomplete. Treat the gap as a completeness question for the reviewer.
